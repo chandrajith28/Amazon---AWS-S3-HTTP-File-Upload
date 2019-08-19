@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <script type="text/javascript">
+    window.onload=function(){
+      //var a=document.querySelector("input[name='X-Amz-Credential']").value;
+      //var b=document.querySelector("input[name='X-Amz-Date']").value;
+      //var c=document.querySelector("input[name='Policy']").value;
+      //var d=document.querySelector("input[name='X-Amz-Signature']").value;
+      //console.log("credential=",a);
+      //console.log("amz date=",b);
+      //console.log("policy=",c);
+      //console.log("signature=",d);
+      var e=document.querySelector("#file-name")
+      e.onchange=function(){
+        var pathval=String(e.value);
+        pathval=pathval.replace("C:\\fakepath\\","");
+      //  console.log(pathval);
+        var keyval=document.querySelector("#key-name");
+        keyval.value=pathval;
+      }
+      }
+    </script>
+    <title>AWS S3 HTTP file upload</title>
+    </head>
+  <body>
+    <div class="row">
+      <div class="container jumbotron text-align-center">
+        <b>Upload your file below</b>
+        </div>
+      </div>
+    <div class="container">
+      Use the below form to upload the file
+      </div>
+      
+      
+      <div class="jumbotron container">
+        <div class="form-group text-center">
+      <form method="post" action="http://<enter your aws s3 bucket here>.s3.amazonaws.com/" enctype="multipart/form-data">
+        <div class="form-group text-center">
+        <input id="key-name" type="input" name="key" value="" placeholder="key,choose file" required/>
+        </div>
+        <input type="hidden" name="acl" value="public-read" />
+        <input type="hidden" name="success_action_redirect" value="{{ URL }}" />
+        <input type="hidden" name="x-amz-server-side-encryption" value="AES256" />
+        <input type="hidden" name="X-Amz-Credential" value="{{ credentials }}" />
+        <input type="hidden" name="X-Amz-Algorithm" value="AWS4-HMAC-SHA256" />
+        <input type="hidden" name="X-Amz-Date" value="{{ date }}" />
+        <input type="hidden" name="Policy" value="{{ policy }}" />
+        <input type="hidden" name="X-Amz-Signature" value="{{ signature }}" />
+        <div class="form-group text-center">
+        <input id="file-name" type="file" name="file" />
+        </div>
+        <div class="form-group text-center container">
+        <input class="btn btn-success" type="submit" value="Upload file" />
+        </div>
+      </form>
+      </div>
+      </div>
+  </body>
+</html>
